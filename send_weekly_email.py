@@ -1,6 +1,6 @@
 """
 Wrapper script that runs draftWeeklyEmail.py, captures its stdout,
-and sends the output as an HTML email via Microsoft 365 SMTP.
+and sends the output as an HTML email via Gmail SMTP.
 """
 
 import os
@@ -144,8 +144,8 @@ def build_html(plain_text: str) -> str:
 </html>"""
 
 
-def send_email(sender: str, smtp_user: str, password: str, recipients: list[str], subject: str, html: str):
-    """Send an HTML email to each recipient via Microsoft 365 SMTP."""
+def send_email(sender: str, password: str, recipients: list[str], subject: str, html: str):
+    """Send an HTML email to each recipient via Gmail SMTP."""
     for recipient in recipients:
         msg = MIMEMultipart("alternative")
         msg["From"] = sender
@@ -154,9 +154,9 @@ def send_email(sender: str, smtp_user: str, password: str, recipients: list[str]
         msg.attach(MIMEText(html, "html"))
 
         try:
-            with smtplib.SMTP("smtp.office365.com", 587) as server:
+            with smtplib.SMTP("smtp.gmail.com", 587) as server:
                 server.starttls()
-                server.login(smtp_user, password)
+                server.login(sender, password)
                 server.sendmail(sender, recipient, msg.as_string())
             print(f"✓ Email sent to {recipient}")
         except Exception as exc:
@@ -164,12 +164,11 @@ def send_email(sender: str, smtp_user: str, password: str, recipients: list[str]
 
 
 def main():
-    sender = os.environ.get("SENDER_EMAIL")        # shared mailbox: lalp@avenues-ny.org
-    smtp_user = os.environ.get("SMTP_USERNAME")     # your login: harrison_green@avenues-ny.org
+    sender = os.environ.get("SENDER_EMAIL")
     password = os.environ.get("EMAIL_PASSWORD")
 
-    if not sender or not smtp_user or not password:
-        print("ERROR: SENDER_EMAIL, SMTP_USERNAME, and EMAIL_PASSWORD environment variables must be set.", file=sys.stderr)
+    if not sender or not password:
+        print("ERROR: SENDER_EMAIL and EMAIL_PASSWORD environment variables must be set.", file=sys.stderr)
         sys.exit(1)
 
     if not RECIPIENTS:
@@ -178,7 +177,7 @@ def main():
 
     body = get_email_body()
     html = build_html(body)
-    send_email(sender, smtp_user, password, RECIPIENTS, SUBJECT, html)
+    send_email(sender, password, RECIPIENTS, SUBJECT, html)
 
 
 if __name__ == "__main__":
