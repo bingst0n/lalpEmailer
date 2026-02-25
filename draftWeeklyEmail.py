@@ -31,8 +31,8 @@ draft = f"""Hello everyone,
 
 We hope you're having a great week! We are reaching out today to let you know about upcoming Awareness Presentation and Read Aloud opportunities. You can sign up for either below:
 
-Awareness Presentations ({len(awareness)} available): https://docs.google.com/spreadsheets/d/1m2csZS2ObSzhLn1Nx2um2vwN3bs5oLDz5k5Qq6Hezpk/
-Read Alouds ({len(readaloud)} available): https://docs.google.com/spreadsheets/d/1vPuVvSCBr8mVz2TCbd-eZL_kFiU-IxrBQeWGrZjWFGQ/
+Awareness Presentations ({len(awareness)} available): https://docs.google.com/spreadsheets/d/1ss6kHQD9Ikj8PFT5Gh9pIAagwK6q1ELeSaIJrav99kg/edit?gid=1193248894#gid=1193248894
+Read Alouds ({len(readaloud)} available): https://docs.google.com/spreadsheets/d/1g1x3YABvaai-T7W3Mtf1ab3Vnfnx5zcQFnb7GudFHgM/edit?gid=1444627900#gid=1444627900
 
 Have a great week!
 
