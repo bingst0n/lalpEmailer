@@ -1,0 +1,29 @@
+name: Weekly Email
+
+on:
+  schedule:
+    # Every Wednesday at 5:00 PM UTC
+    - cron: "0 17 * * 3"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pandas
+
+      - name: Send weekly email
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python send_weekly_email.py
