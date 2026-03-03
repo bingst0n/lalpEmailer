@@ -102,6 +102,7 @@ RECIPIENTS = [
     "sahara_maazel@avenues-ny.org",
     "naveli_rahman@avenues-ny.org",
     "taran_arulraj@avenues-ny.org",
+    "anisa_patel@avenues-ny.org",
 ]
 
 SUBJECT = "LaLP Weekly Update — Awareness Presentations & Read Alouds"
