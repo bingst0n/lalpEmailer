@@ -1,10 +1,10 @@
 name: Weekly Email
 
 on:
-  # schedule:
-  #   # Every Wednesday at 5:00 PM UTC
-  #   - cron: "0 17 * * 3"
-  workflow_dispatch: # Manual triggering only for now
+  schedule:
+    # Every Wednesday at 5:00 PM UTC
+    - cron: "0 17 * * 3"
+  workflow_dispatch: # Allow manual triggering
 
 jobs:
   send-email:
