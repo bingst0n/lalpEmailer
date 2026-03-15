@@ -8,6 +8,7 @@ import re
 import sys
 import subprocess
 import smtplib
+from datetime import date
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -103,9 +104,17 @@ RECIPIENTS = [
     "naveli_rahman@avenues-ny.org",
     "taran_arulraj@avenues-ny.org",
     "anisa_patel@avenues-ny.org",
+    "Mila_Simovic@avenues-ny.org",
 ]
 
 SUBJECT = "LaLP Weekly Update — Awareness Presentations & Read Alouds"
+
+# Dates to skip sending (YYYY, M, D). Add/remove entries to pause/unpause.
+SKIP_DATES = [
+    date(2026, 3, 18),
+    date(2026, 3, 25),
+    date(2026, 4, 1),
+]
 # ──────────────────────────────────────────────
 
 
@@ -175,6 +184,11 @@ def main():
     if not RECIPIENTS:
         print("ERROR: RECIPIENTS list is empty. Add at least one address.", file=sys.stderr)
         sys.exit(1)
+
+    today = date.today()
+    if today in SKIP_DATES:
+        print(f"Today ({today}) is in SKIP_DATES. Skipping email.")
+        return
 
     body = get_email_body()
 
