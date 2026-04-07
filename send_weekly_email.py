@@ -115,6 +115,11 @@ SKIP_DATES = [
     date(2026, 3, 25),
     date(2026, 4, 1),
 ]
+
+# Date-specific notes to include in emails (YYYY, M, D): note text
+DATE_NOTES = {
+    date(2026, 4, 7): "Note that some awareness presentations this week are in immersion languages.",
+}
 # ──────────────────────────────────────────────
 
 
@@ -135,6 +140,20 @@ def get_email_body() -> str:
         sys.exit(1)
 
     return result.stdout
+
+
+def add_date_note(body: str, today: date) -> str:
+    """Add date-specific note before 'Have a great week!' if one exists for today."""
+    if today not in DATE_NOTES:
+        return body
+    
+    note = DATE_NOTES[today]
+    # Insert the note as a separate paragraph before "Have a great week!"
+    if "Have a great week!" in body:
+        return body.replace("Have a great week!", f"{note}\n\nHave a great week!")
+    else:
+        # Fallback: append at the end if the expected text isn't found
+        return body + f"\n\n{note}\n"
 
 
 def build_html(plain_text: str) -> str:
@@ -191,6 +210,7 @@ def main():
         return
 
     body = get_email_body()
+    body = add_date_note(body, today)
 
     awareness_match = re.search(r"Awareness Presentations \((\d+) available\)", body)
     readaloud_match = re.search(r"Read Alouds \((\d+) available\)", body)
